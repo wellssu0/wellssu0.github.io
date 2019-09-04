@@ -57,17 +57,17 @@ kramdown:
 
 # 评论系统
 # Disqus（https://disqus.com/）
-# disqus_username: wellssu
+disqus_username: wellssu
 
 # Gitalk
-gitalk:
-  enable: true    #是否开启Gitalk评论
-  clientID: d192a4dbdde1d0aaf5ee                            #生成的clientID
-  clientSecret: c021f1378ec911ec64cc7ac990d209ce52de1756    #生成的clientSecret
-  repo: wellssu0.github.io    #仓库名称
-  owner: wellssu0    #github用户名
-  admin: wellssu0
-  distractionFreeMode: true #是否启用类似FB的阴影遮罩
+# gitalk:
+#   enable: true    #是否开启Gitalk评论
+#   clientID: d192a4dbdde1d0aaf5ee                            #生成的clientID
+#   clientSecret: c021f1378ec911ec64cc7ac990d209ce52de1756    #生成的clientSecret
+#   repo: wellssu0.github.io    #仓库名称
+#   owner: wellssu0    #github用户名
+#   admin: wellssu0
+#   distractionFreeMode: true #是否启用类似FB的阴影遮罩
 
 
 # 统计
