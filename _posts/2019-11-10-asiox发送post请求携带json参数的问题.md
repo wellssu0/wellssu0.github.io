@@ -59,7 +59,6 @@ axios.request({
 
 
 2. 将自己请求头中的Content-Type改成application/x-www-form-urlencoded，并且将json参数转换成query参数。
-
     ```js
     import qs from 'qs' //引入qs库
 
@@ -86,9 +85,7 @@ axios.request({
 
 
 
-3. 通过修改 `transformRequest` 来达到我们的目的
-	在 axios 的请求配置项中，是有 `transformRequest` 的配置的：
-
+3. 通过修改 `transformRequest` 来达到我们的目的.在 axios 的请求配置项中，是有 `transformRequest` 的配置的：
     ```js
     axios.request({
         url:'/login',
@@ -109,47 +106,41 @@ axios.request({
     ```
 
 4.  重写一个 axios 实例，重新实现属于我们自己的 transformReques 
-
-   ```js
-   import axios from 'axios'
-   let instance = axios.create({
-   	transformRequest: [function transformRequest(data, headers) {
-   	    normalizeHeaderName(headers, 'Content-Type');
-   	    if (utils.isFormData(data) ||
-   	      utils.isArrayBuffer(data) ||
-   	      utils.isBuffer(data) ||
-   	      utils.isStream(data) ||
-   	      utils.isFile(data) ||
-   	      utils.isBlob(data)
-   	    ) {
-   	      return data;
-   	    }
-   	    if (utils.isArrayBufferView(data)) {
-   	      return data.buffer;
-   	    }
-   	    if (utils.isURLSearchParams(data)) {
-   	      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
-   	      return data.toString();
-   	    }
-   	    /*改了这里*/
-   	    if (utils.isObject(data)) {
-   	      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
-   	      let _data = Object.keys(data)
-   	      return encodeURI(_data.map(name => `${name}=${data[name]}`).join('&'));
-   	    }
-   	    return data;
-   	}],
-   })
-   ```
-
+	   ```js
+	   import axios from 'axios'
+	   let instance = axios.create({
+		transformRequest: [function transformRequest(data, headers) {
+		    normalizeHeaderName(headers, 'Content-Type');
+		    if (utils.isFormData(data) ||
+		      utils.isArrayBuffer(data) ||
+		      utils.isBuffer(data) ||
+		      utils.isStream(data) ||
+		      utils.isFile(data) ||
+		      utils.isBlob(data)
+		    ) {
+		      return data;
+		    }
+		    if (utils.isArrayBufferView(data)) {
+		      return data.buffer;
+		    }
+		    if (utils.isURLSearchParams(data)) {
+		      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+		      return data.toString();
+		    }
+		    /*改了这里*/
+		    if (utils.isObject(data)) {
+		      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+		      let _data = Object.keys(data)
+		      return encodeURI(_data.map(name => `${name}=${data[name]}`).join('&'));
+		    }
+		    return data;
+		}],
+	   })
+	   ```
 
 5. 直接在参数这写
-
    ```js
     axios.post('/api/lockServer/search',"userName='admin'&pwd='admin'")
    ```
-
-   
-
 6. 我们知道现在我们服务端同学接收参数用的是 `@RequestParam`（通过字符串中解析出参数）
    其实还有另一种是 `@RequestBody`（从请求体中获取参数）。我们让后端的同学改成 `@RequestBody` 
